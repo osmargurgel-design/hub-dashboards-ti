@@ -4,80 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hub de Dashboards TI — Field Service Operations</title>
-<meta name="description" content="Suite de dashboards operacionais para field service de TI — engine determinística + camada de leitura, construída sobre dados reais de 17 meses de operação.">
+<meta name="description" content="Dashboards operacionais para field service de TI — Visão Operacional e Visão Gestores.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#14161A; --surface:#1B1E24; --surface2:#20242C; --border:rgba(255,255,255,.08);
     --gold:#F9C000; --gold-dim:rgba(249,192,0,.12);
     --blue:#4A8FE0; --blue-dim:rgba(74,143,224,.12);
     --text:#ECEDEE; --text-dim:#9AA3B0; --text-faint:#5D6572;
-    --mono:'JetBrains Mono', ui-monospace, monospace;
     --display:'Space Grotesk', 'Inter', sans-serif;
     --body:'Inter', -apple-system, sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;
+  body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;
     background-image:radial-gradient(circle at 15% 0%, rgba(249,192,0,.05), transparent 40%),
                       radial-gradient(circle at 90% 10%, rgba(74,143,224,.06), transparent 45%);
+    display:flex;align-items:center;
   }
   a{color:inherit}
-  .wrap{max-width:920px;margin:0 auto;padding:0 24px}
+  .wrap{max-width:920px;margin:0 auto;padding:56px 24px}
 
-  /* ── Nav ── */
-  nav{padding:22px 0}
-  nav .wrap{display:flex;justify-content:space-between;align-items:center}
-  .brand{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.2px}
-  .brand span{color:var(--gold)}
-  nav .navlinks{display:flex;gap:22px;font-size:13px;color:var(--text-dim)}
-  nav .navlinks a:hover{color:var(--text)}
+  .section h2{font-family:var(--display);font-weight:600;font-size:24px;margin-bottom:8px;letter-spacing:-.2px}
+  .section > p{color:var(--text-dim);font-size:14.5px;max-width:680px}
 
-  /* ── Hero ── */
-  .hero{padding:56px 0 44px;border-bottom:1px solid var(--border)}
-  .eyebrow{font-family:var(--mono);font-size:11.5px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-  .eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
-  h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,46px);line-height:1.08;letter-spacing:-.5px;max-width:780px}
-  h1 em{font-style:normal;color:var(--gold)}
-  .lede{font-size:15.5px;color:var(--text-dim);max-width:600px;margin-top:18px;line-height:1.7}
-
-  /* ── Ticker / assinatura visual: SLA real de 17 meses ── */
-  .ticker{margin-top:40px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 26px;
-    animation:fadeUp .6s ease both; animation-delay:.1s}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .ticker-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-  .ticker-head .tt{font-family:var(--mono);font-size:11px;color:var(--text-faint);letter-spacing:.5px;text-transform:uppercase}
-  .ticker-head .tv{font-family:var(--mono);font-size:12px;color:var(--text-dim)}
-  .ticker-head .tv b{color:var(--gold);font-weight:600}
-  svg.spark{width:100%;height:96px;display:block}
-  .ticker-foot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--text-faint);margin-top:8px}
-  .stats-row{display:flex;gap:28px;margin-top:22px;flex-wrap:wrap}
-  .stat{}
-  .stat .sv{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--text)}
-  .stat .sl{font-size:11px;color:var(--text-faint);margin-top:2px}
-
-  /* ── Sobre / arquitetura ── */
-  .section{padding:52px 0;border-bottom:1px solid var(--border)}
-  .section h2{font-family:var(--display);font-weight:600;font-size:22px;margin-bottom:14px;letter-spacing:-.2px}
-  .section p{color:var(--text-dim);font-size:14.5px;max-width:680px}
-  .section p + p{margin-top:12px}
-  .architecture{display:flex;align-items:center;gap:0;margin-top:28px;flex-wrap:wrap}
-  .arch-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-family:var(--mono);font-size:12px;color:var(--text-dim);text-align:center;flex:1;min-width:150px}
-  .arch-box b{display:block;color:var(--text);font-family:var(--body);font-weight:600;font-size:13px;margin-bottom:3px}
-  .arch-arrow{color:var(--text-faint);font-size:18px;padding:0 14px;flex-shrink:0}
-  @media(max-width:640px){.architecture{flex-direction:column}.arch-arrow{transform:rotate(90deg);padding:6px 0}}
-
-  /* ── Cards dos dashboards ── */
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
   @media(max-width:700px){.cards{grid-template-columns:1fr}}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s, transform .2s;text-decoration:none}
   .card:hover{transform:translateY(-2px)}
   .card.d1:hover{border-color:rgba(249,192,0,.4)}
   .card.d2:hover{border-color:rgba(74,143,224,.4)}
   .card-top{display:flex;justify-content:space-between;align-items:flex-start}
-  .card-tag{font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.3px}
+  .card-tag{font-family:var(--body);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.3px}
   .card.d1 .card-tag{background:var(--gold-dim);color:var(--gold)}
   .card.d2 .card-tag{background:var(--blue-dim);color:var(--blue)}
   .card h3{font-family:var(--display);font-weight:600;font-size:19px}
@@ -90,123 +49,49 @@
   .card-cta .go{transition:transform .2s}
   .card:hover .card-cta .go{transform:translateX(3px)}
 
-  /* ── Nota de transparência ── */
   .note{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-top:26px;font-size:12.5px;color:var(--text-dim);display:flex;gap:10px;align-items:flex-start}
   .note b{color:var(--text)}
 
-  footer{padding:36px 0 60px;text-align:center}
-  footer p{font-size:12px;color:var(--text-faint)}
-
   :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-  @media(prefers-reduced-motion: reduce){ .ticker{animation:none} }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="brand">Hub<span>·</span>Dashboards TI</div>
-    <div class="navlinks">
-      <a href="#sobre">Sobre</a>
-      <a href="#dashboards">Dashboards</a>
-    </div>
-  </div>
-</nav>
+<section class="section wrap" id="dashboards">
+  <h2>Os dashboards</h2>
+  <p>Cada público vê só o que precisa — mesma engine, recortes diferentes.</p>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">Field Service Operations · TI</div>
-    <h1>Uma engine determinística contando <em>17 meses</em> de operação real.</h1>
-    <p class="lede">Suite de dashboards para operações de field service de TI no varejo brasileiro — SLA, backlog, franquia, ativos e governança, gerados a partir de uma base real de chamados por uma engine de cálculo validada e auditável.</p>
-
-    <div class="ticker">
-      <div class="ticker-head">
-        <span class="tt">SLA mensal · Jan/25 → Mai/26</span>
-        <span class="tv">82,1% → <b>97,6%</b></span>
+  <div class="cards">
+    <a class="card d1" href="./D1_VisaoOperacional_ClientesDiversos.html" target="_blank" rel="noopener">
+      <div class="card-top">
+        <span class="card-tag">D1</span>
       </div>
-      <svg class="spark" viewBox="0 0 700 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="0" y1="18.24" x2="700" y2="18.24" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 4"/>
-        <polyline points="0.00,32.00 43.75,28.71 87.50,19.93 131.25,17.74 175.00,11.70 218.75,15.18 262.50,16.82 306.25,11.89 350.00,16.64 393.75,9.14 437.50,8.05 481.25,5.30 525.00,0.91 568.75,0.00 612.50,3.66 656.25,3.66 700.00,3.66"
-          fill="none" stroke="url(#gradSpark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <defs>
-          <linearGradient id="gradSpark" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#F9C000" stop-opacity=".55"/>
-            <stop offset="1" stop-color="#F9C000"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      <div class="ticker-foot"><span>Jan/25</span><span>Mai/26</span></div>
-
-      <div class="stats-row">
-        <div class="stat"><div class="sv">5.006</div><div class="sl">chamados analisados</div></div>
-        <div class="stat"><div class="sv">17</div><div class="sl">meses de operação</div></div>
-        <div class="stat"><div class="sv">582</div><div class="sl">ativos únicos rastreados</div></div>
-        <div class="stat"><div class="sv">0</div><div class="sl">inconsistências na validação</div></div>
+      <h3>Visão Operacional</h3>
+      <p>Para quem toca a operação no dia a dia: SLA por nível (N1/N2/N3), parceiros, reembolsos e laboratório de manutenção — com o detalhe por técnico que a liderança não precisa ver.</p>
+      <div class="tabs-list">
+        <span class="tabpill">Visão Geral</span><span class="tabpill">Por Nível</span><span class="tabpill">Parceiros</span><span class="tabpill">Reembolsos</span><span class="tabpill">Por Estado</span>
       </div>
-    </div>
-  </div>
-</header>
+      <div class="card-cta">Abrir dashboard <span class="go">→</span></div>
+    </a>
 
-<section class="section" id="sobre">
-  <div class="wrap">
-    <h2>Como funciona</h2>
-    <p>A engine de cálculo é a única fonte de verdade: SLA, backlog, franquia e score de governança saem sempre da mesma fórmula, período a período. A camada de leitura narra o resultado — ela nunca recalcula nada.</p>
-    <p>Antes de qualquer geração, um validador roda sobre a base inteira e reporta inconsistências em vez de escondê-las atrás de valores padrão.</p>
-    <div class="architecture">
-      <div class="arch-box"><b>CSV bruto</b>chamados + ativos</div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-box"><b>Engine determinística</b>SLA · backlog · franquia</div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-box"><b>Validação</b>reporta, nunca esconde</div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-box"><b>Dashboard interativo</b>filtros + PDF</div>
-    </div>
+    <a class="card d2" href="./D2_VisaoGestores_ClientesDiversos.html" target="_blank" rel="noopener">
+      <div class="card-top">
+        <span class="card-tag">D2</span>
+      </div>
+      <h3>Visão Gestores</h3>
+      <p>Para quem decide sobre o contrato: produtividade agregada do time, saúde do contrato e comparativo ano a ano — sem expor dado individual de ninguém.</p>
+      <div class="tabs-list">
+        <span class="tabpill">Visão Geral</span><span class="tabpill">Produtividade</span><span class="tabpill">Parceiros</span><span class="tabpill">Saúde do Contrato</span><span class="tabpill">Comparativo Anual</span>
+      </div>
+      <div class="card-cta">Abrir dashboard <span class="go">→</span></div>
+    </a>
+  </div>
+
+  <div class="note">
+    <span>ℹ️</span>
+    <span><b>Sobre os dados:</b> os dois dashboards rodam sobre uma base de teste padrão do projeto (nomes de loja, técnico e cliente são fictícios). Todo o processamento acontece no navegador — nada é enviado a um servidor ao abrir os arquivos.</span>
   </div>
 </section>
-
-<section class="section" id="dashboards" style="border-bottom:none">
-  <div class="wrap">
-    <h2>Os dashboards</h2>
-    <p>Cada público vê só o que precisa — mesma engine, recortes diferentes.</p>
-
-    <div class="cards">
-      <a class="card d1" href="./D1_VisaoOperacional_ClientesDiversos.html" target="_blank" rel="noopener">
-        <div class="card-top">
-          <span class="card-tag">D1</span>
-        </div>
-        <h3>Visão Operacional</h3>
-        <p>Para quem toca a operação no dia a dia: SLA por nível (N1/N2/N3), parceiros, reembolsos e laboratório de manutenção — com o detalhe por técnico que a liderança não precisa ver.</p>
-        <div class="tabs-list">
-          <span class="tabpill">Visão Geral</span><span class="tabpill">Por Nível</span><span class="tabpill">Parceiros</span><span class="tabpill">Reembolsos</span><span class="tabpill">Por Estado</span>
-        </div>
-        <div class="card-cta">Abrir dashboard <span class="go">→</span></div>
-      </a>
-
-      <a class="card d2" href="./D2_VisaoGestores_ClientesDiversos.html" target="_blank" rel="noopener">
-        <div class="card-top">
-          <span class="card-tag">D2</span>
-        </div>
-        <h3>Visão Gestores</h3>
-        <p>Para quem decide sobre o contrato: produtividade agregada do time, saúde do contrato e comparativo ano a ano — sem expor dado individual de ninguém.</p>
-        <div class="tabs-list">
-          <span class="tabpill">Visão Geral</span><span class="tabpill">Produtividade</span><span class="tabpill">Parceiros</span><span class="tabpill">Saúde do Contrato</span><span class="tabpill">Comparativo Anual</span>
-        </div>
-        <div class="card-cta">Abrir dashboard <span class="go">→</span></div>
-      </a>
-    </div>
-
-    <div class="note">
-      <span>ℹ️</span>
-      <span><b>Sobre os dados:</b> os dois dashboards rodam sobre uma base de teste padrão do projeto (nomes de loja, técnico e cliente são fictícios). Todo o processamento acontece no navegador — nada é enviado a um servidor ao abrir os arquivos.</span>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <p>Construído com uma engine de cálculo determinística + camada de leitura sobre a mesma base de dados.</p>
-  </div>
-</footer>
 
 </body>
 </html>
